@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Yandex-Practicum/final-project-encoding-go/models"
+	"gopkg.in/yaml.v3"
 	"os"
 )
 
@@ -44,15 +45,10 @@ func (j *JSONData) Encoding() error {
 		return nil
 	}
 
-	yamlFile, err := os.Open(j.FileOutput)
+	yamlFile, err := os.Create(j.FileOutput)
 	if err != nil {
-		fmt.Printf("ошибка при открытии файла %s: %s", j.FileOutput, err.Error())
-		fmt.Printf("создаем файл %s", j.FileOutput)
-		yamlFile, err = os.Create(j.FileOutput)
-		if err != nil {
-			fmt.Printf("ошибка при создании файла: %s: %s", j.FileOutput, err.Error())
-			return nil
-		}
+		fmt.Printf("ошибка при создании файла: %s: %s", j.FileOutput, err.Error())
+		return nil
 	}
 
 	yamlData, err := yaml.Marshal(&j.DockerCompose)
@@ -86,15 +82,10 @@ func (y *YAMLData) Encoding() error {
 		return nil
 	}
 
-	jsonFile, err := os.Open(y.FileOutput)
+	jsonFile, err := os.Create(y.FileOutput)
 	if err != nil {
-		fmt.Printf("ошибка при открытии файла %s: %s", y.FileOutput, err.Error())
-		fmt.Printf("создаем файл %s", y.FileOutput)
-		jsonFile, err = os.Create(y.FileOutput)
-		if err != nil {
-			fmt.Printf("ошибка при создании файла: %s: %s", y.FileOutput, err.Error())
-			return nil
-		}
+		fmt.Printf("ошибка при создании файла: %s: %s", y.FileOutput, err.Error())
+		return nil
 	}
 
 	defer jsonFile.Close()
